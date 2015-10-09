@@ -5,6 +5,9 @@
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
+
+#include "Octagon.h"
+
 using namespace cv;
 using namespace std;
 
@@ -72,6 +75,13 @@ int main()
 	contours0.resize(contours.size());
 	for( size_t k = 0; k < contours.size(); k++ )
 		approxPolyDP(Mat(contours[k]), contours0[k], 3, true);
+
+	vector<Octagon> octagons;
+	for( size_t k = 0; k < contours0.size(); k++ ) {
+		if (Octagon::isOctagon(contours0[k])) {
+			octagons.push_back(Octagon(contours0[k]));
+		}
+	}
 
 	/// Draw contours,²ÊÉ«ÂÖÀª  
 	dst = Mat::zeros(canny_output.size(), CV_8UC3);
