@@ -72,8 +72,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <ExecutablePath>E:\opencv\opencv\build\x86\vc12\bin;$(ExecutablePath)</ExecutablePath>
-    <ReferencePath>E:\opencv\opencv\build\include;$(ReferencePath)</ReferencePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
     <LibraryPath>E:\opencv\opencv\build\x86\vc12\lib;E:\opencv\opencv\build\x86\vc12\staticlib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\opencv\opencv\build\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
