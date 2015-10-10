@@ -14,12 +14,11 @@ using namespace std;
 #define MIN_AREA 100
 #define WHRATIO 0.1
 
-int main()
+bool getOctagon(const char* filename, vector<Octagon>& octagons, Mat& src, vector<vector<Point>>& contours, vector<Vec4i>& hierarchy)
 {
-	const char* inputImage = "recognition.jpg";
-	Mat src, dst, canny_output;
+	Mat dst, canny_output;
 	/// Load source image and convert it to gray  
-	src = imread(inputImage, 0);
+	src = imread(filename, 0);
 
 	if (!src.data)
 	{
@@ -29,9 +28,7 @@ int main()
 	blur(src, src, Size(3, 3));
 
 
-	//the pram. for findContours,  
-	vector<vector<Point> > contours;
-	vector<Vec4i> hierarchy;
+	
 
 	/// Detect edges using canny  
 	Canny(src, canny_output, 80, 255, 3);
@@ -75,24 +72,54 @@ int main()
 	contours0.resize(contours.size());
 	for( size_t k = 0; k < contours.size(); k++ )
 		approxPolyDP(Mat(contours[k]), contours0[k], 3, true);
-
-	vector<Octagon> octagons;
+	
 	for( size_t k = 0; k < contours0.size(); k++ ) {
 		if (Octagon::isOctagon(contours0[k])) {
 			octagons.push_back(Octagon(contours0[k]));
 		}
 	}
+}
+
+
+
+int main()
+{	
+	bool a;
+	Mat img1, img2;
+	vector<Octagon> octagons;
+	vector<int> octagons_to_draw;
+	Octagon octagon0;
+	//the pram. for findContours,  
+	vector<vector<Point> > contours;
+	vector<Vec4i> hierarchy;
+
+	getOctagon("octagon.jpg", octagons, img1, contours, hierarchy);
+	if (octagons.size()) {
+		octagon0 = octagons[0];
+		octagons.clear();
+	}
+	contours.clear();
+	hierarchy.clear();
+	getOctagon("recognition.jpg", octagons, img2, contours, hierarchy);
+	for (int i=0;i<octagons.size();i++) {
+		if (octagon0.isSame(&octagons[i])) {
+			octagons_to_draw.push_back(i);
+		}
+	}
+
 
 	/// Draw contours,²ÊÉ«ÂÖÀª  
-	dst = Mat::zeros(canny_output.size(), CV_8UC3);
-	RNG rng;
-	for (int i = 0; i< contours0.size(); i++)
+	Mat dst;
+	dst = Mat::zeros(img2.size(), CV_8UC3);
+	
+	for (int i = 0; i< octagons_to_draw.size(); i++)
 	{
-		//Ëæ»úÑÕÉ«  
-		Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
-		drawContours(dst, contours0, i, color, 2, 8, hierarchy, 0, Point());
+		
+		Scalar color = Scalar(255, 255, 0);
+		drawContours(dst, contours, octagons_to_draw[i], color, 2, 8, hierarchy, 0, Point());
 	}
 	// Create Window  
+	
 	char* source_window = "countors";
 	namedWindow(source_window, CV_WINDOW_NORMAL);
 	imshow(source_window, dst);

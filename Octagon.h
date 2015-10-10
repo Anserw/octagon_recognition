@@ -26,6 +26,8 @@ public:
 	Octagon(std::vector<cv::Point> contour);
 	~Octagon(void);
 	static bool isOctagon(std::vector<cv::Point> contour);
+	bool isSame(Octagon* targetOctagon);
+	const std::vector<double>& getVectorCR();
 	//void compute
 
 private:
@@ -43,5 +45,6 @@ private:
 	std::vector<octagon_point> points;
 	std::vector<octagon_line> lines;
 	std::vector<double> vectorCR;
+	double accurate;
 };
 
