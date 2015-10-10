@@ -89,14 +89,14 @@ int main()
 	vector<vector<Point> > contours;
 	vector<Vec4i> hierarchy;
 
-	getOctagon("octagon.jpg", octagons, img1, contours, hierarchy);
+	getOctagon("image\\octagon.jpg", octagons, img1, contours, hierarchy);
 	if (octagons.size()) {
 		octagon0 = octagons[0];
 		octagons.clear();
 	}
 	contours.clear();
 	hierarchy.clear();
-	getOctagon("recognition1.jpg", octagons, img2, contours, hierarchy);
+	getOctagon("image\\recognition1.jpg", octagons, img2, contours, hierarchy);
 	for (int i=0;i<octagons.size();i++) {
 		if (octagon0.isSame(&octagons[i])) {
 			octagons_to_draw.push_back(i);
