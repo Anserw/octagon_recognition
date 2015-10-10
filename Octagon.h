@@ -27,15 +27,12 @@ public:
 	~Octagon(void);
 	static bool isOctagon(std::vector<cv::Point> contour);
 	bool isSame(Octagon* targetOctagon);
-	const std::vector<double>& getVectorCR();
-	//void compute
+	const std::vector<double>& getVectorCR();	
 
 private:
 	static double computeSimpleRatio(simple_point a, simple_point b, simple_point c);
 	static double computeCrossRatio(simple_point a, simple_point b, simple_point c, simple_point d);
-	static double computeCrossRatio(simple_line a, simple_line b, simple_line c, simple_line d);
-	static double computeTan(double k1, double k2);
-	static double computeTanToSin(double tan);
+	static double computeCrossRatio(simple_line a, simple_line b, simple_line c, simple_line d);	
 
 	double computeAngle(simple_line l1, simple_line l2);
 	double computeCR(int i);

@@ -25,16 +25,12 @@ bool getOctagon(const char* filename, vector<Octagon>& octagons, Mat& src, vecto
 		std::cout << "read data error!" << std::endl;
 		return -1;
 	}
-	blur(src, src, Size(3, 3));
-
-
-	
+	blur(src, src, Size(3, 3));	
 
 	/// Detect edges using canny  
 	Canny(src, canny_output, 80, 255, 3);
 	/// Find contours  	
-	findContours(canny_output, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_KCOS, Point(0, 0));
-	//CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE  
+	findContours(canny_output, contours, hierarchy, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_TC89_KCOS, Point(0, 0));	
 
 	double maxarea = 0;
 	int maxAreaIdx = 0;
@@ -100,7 +96,7 @@ int main()
 	}
 	contours.clear();
 	hierarchy.clear();
-	getOctagon("recognition.jpg", octagons, img2, contours, hierarchy);
+	getOctagon("recognition1.jpg", octagons, img2, contours, hierarchy);
 	for (int i=0;i<octagons.size();i++) {
 		if (octagon0.isSame(&octagons[i])) {
 			octagons_to_draw.push_back(i);
@@ -108,7 +104,7 @@ int main()
 	}
 
 
-	/// Draw contours,²ÊÉ«ÂÖÀª  
+	/// Draw contours
 	Mat dst;
 	dst = Mat::zeros(img2.size(), CV_8UC3);
 	

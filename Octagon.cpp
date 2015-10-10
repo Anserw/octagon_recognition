@@ -97,19 +97,9 @@ double Octagon::computeCrossRatio(simple_line a, simple_line b, simple_line c, s
 	return 0;
 }
 
-double Octagon::computeTan(double k1, double k2)
-{
-	return (k2 - k1)/(1 + k1*k2);
-}
-
-double Octagon::computeTanToSin(double tan)
-{
-	return sin(atan(tan));
-}
 
 double Octagon::computeAngle(simple_line l1, simple_line l2)
-{
-	//return computeTanToSin(computeTan(l1.k, l2.k));
+{	
 	double ab, ac, bc;
 	ab = l1.length;
 	ac = l2.length;
@@ -123,12 +113,7 @@ double Octagon::computeCR(int n)
 	simple_point *p = &points[n];
 	for (int i=1;i<8;i+=2) {
 		l.push_back(simple_line(*p, points[(n+i)%8]));
-	}
-	double tt1, tt2, tt3;
-	tt1 = computeAngle(l[0], l[1]);
-	tt2 = computeAngle(l[1], l[2]);
-	tt3 = computeAngle(l[2], l[3]);
-	//return (tt1 + tt2) * (tt2 + tt3) / ((tt1 + tt2 + tt3) * (tt2));
+	}	
 	return computeAngle(l[0], l[2]) * computeAngle(l[1], l[3]) / (computeAngle(l[0], l[3]) * computeAngle(l[1], l[2]));
 }
 
